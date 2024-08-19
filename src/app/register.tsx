@@ -11,12 +11,16 @@ import { Button } from '@/components/button';
 
 import { api } from '@/server/api';
 
+import { useBadgeStore } from '@/store/badge-store';
+
 const EVENT_ID = '9e9bd979-9d10-4915-b339-3786b1634f33';
 
 export default function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  const badgeStore = useBadgeStore();
 
   async function handleRegister() {
     try {
@@ -31,9 +35,16 @@ export default function Register() {
         email,
       });
 
-      console.log(registerResponse.data);
-
       if (registerResponse.data.attendeeId) {
+        const badgeResponse = await api.get(
+          `/attendees/${registerResponse.data.attendeeId}/badge`
+        );
+
+        badgeStore.save({
+          id: registerResponse.data.attendeeId,
+          ...badgeResponse.data.badge,
+        });
+
         Alert.alert('Inscrição', 'Inscrição realizada com sucesso!', [
           { text: 'OK', onPress: () => router.push('/ticket') },
         ]);
