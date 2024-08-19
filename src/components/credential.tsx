@@ -9,12 +9,15 @@ import { Feather } from '@expo/vector-icons';
 
 import { colors } from '@/styles/colors';
 
+import { QRCode } from '@/components/qrcode';
+
 interface IProps {
   image?: string;
   onChangeAvatar?: () => void;
+  onExpandQRCode?: () => void;
 }
 
-export function Credential({ image, onChangeAvatar }: IProps) {
+export function Credential({ image, onChangeAvatar, onExpandQRCode }: IProps) {
   return (
     <View className="w-full self-stretch items-center">
       <Image
@@ -60,12 +63,13 @@ export function Credential({ image, onChangeAvatar }: IProps) {
           ilmardanilo@hotmail.com
         </Text>
 
-        <Image
-          source={require('@/assets/ticket/qrcode.png')}
-          className="w-32 h-32"
-        />
+        <QRCode size={120} value="test" />
 
-        <TouchableOpacity activeOpacity={0.7} className="mt-6">
+        <TouchableOpacity
+          activeOpacity={0.7}
+          className="mt-6"
+          onPress={onExpandQRCode}
+        >
           <Text className="font-bold text-orange-500 text-sm">
             Ampliar QRCode
           </Text>
