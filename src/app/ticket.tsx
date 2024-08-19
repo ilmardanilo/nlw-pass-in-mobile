@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Alert,
   Modal,
+  Share,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
@@ -39,6 +40,19 @@ export default function Ticket() {
     } catch (error) {
       console.log(error);
       Alert.alert('Foto', 'Não foi possível selecionar a imagem.');
+    }
+  }
+
+  async function handleShare() {
+    try {
+      if (badgeStore.data?.checkInURL) {
+        await Share.share({
+          message: badgeStore.data.checkInURL,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Compartilhar', 'Não foi possível compartilhar.');
     }
   }
 
@@ -78,7 +92,7 @@ export default function Ticket() {
           {badgeStore.data.eventTitle}!
         </Text>
 
-        <Button title="Compartilhar" />
+        <Button title="Compartilhar" onPress={handleShare} />
 
         <TouchableOpacity activeOpacity={0.7} className="mt-10">
           <Text
