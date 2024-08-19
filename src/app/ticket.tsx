@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
+import { Redirect } from 'expo-router';
+import { MotiView } from 'moti';
 
 import { colors } from '@/styles/colors';
 
@@ -19,7 +21,6 @@ import { Credential } from '@/components/credential';
 import { Button } from '@/components/button';
 import { QRCode } from '@/components/qrcode';
 import { useBadgeStore } from '@/store/badge-store';
-import { Redirect } from 'expo-router';
 
 export default function Ticket() {
   const [expandQRCode, setExpandQRCode] = useState(false);
@@ -76,12 +77,26 @@ export default function Ticket() {
           onExpandQRCode={() => setExpandQRCode(true)}
         />
 
-        <FontAwesome
-          name="angle-double-down"
-          size={24}
-          color={colors.gray[300]}
-          className="self-center my-6"
-        />
+        <MotiView
+          from={{
+            translateY: 0,
+          }}
+          animate={{
+            translateY: 10,
+          }}
+          transition={{
+            loop: true,
+            type: 'timing',
+            duration: 700,
+          }}
+        >
+          <FontAwesome
+            name="angle-double-down"
+            size={24}
+            color={colors.gray[300]}
+            className="self-center my-6"
+          />
+        </MotiView>
 
         <Text className="text-white font-bold text-2xl mt-4">
           Compartilhar credencial
