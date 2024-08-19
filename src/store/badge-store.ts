@@ -14,6 +14,7 @@ export interface IBadgeStore {
 interface IStateProps {
   data: IBadgeStore | null;
   save: (badge: IBadgeStore) => void;
+  updateAvatar: (uri: string) => void;
   remove: () => void;
 }
 
@@ -23,6 +24,11 @@ export const useBadgeStore = create(
       data: null,
 
       save: (badge: IBadgeStore) => set(() => ({ data: badge })),
+
+      updateAvatar: (uri: string) =>
+        set((currentState) => ({
+          data: { ...currentState.data!, image: uri },
+        })),
 
       remove: () => set(() => ({ data: null })),
     }),
