@@ -17,10 +17,14 @@ import { Header } from '@/components/header';
 import { Credential } from '@/components/credential';
 import { Button } from '@/components/button';
 import { QRCode } from '@/components/qrcode';
+import { useBadgeStore } from '@/store/badge-store';
+import { Redirect } from 'expo-router';
 
 export default function Ticket() {
   const [image, setImage] = useState('');
   const [expandQRCode, setExpandQRCode] = useState(false);
+
+  const badgeStore = useBadgeStore();
 
   async function handleSelectImage() {
     try {
@@ -37,6 +41,10 @@ export default function Ticket() {
       console.log(error);
       Alert.alert('Foto', 'Não foi possível selecionar a imagem.');
     }
+  }
+
+  if (!badgeStore.data?.checkInURL) {
+    return <Redirect href={'/'} />;
   }
 
   return (
@@ -73,7 +81,10 @@ export default function Ticket() {
         <Button title="Compartilhar" />
 
         <TouchableOpacity activeOpacity={0.7} className="mt-10">
-          <Text className="text-white font-bold text-base text-center">
+          <Text
+            className="text-white font-bold text-base text-center"
+            onPress={() => badgeStore.remove()}
+          >
             Remover Ingresso
           </Text>
         </TouchableOpacity>

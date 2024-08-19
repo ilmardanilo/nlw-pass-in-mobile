@@ -14,6 +14,7 @@ export interface IBadgeStore {
 interface IStateProps {
   data: IBadgeStore | null;
   save: (badge: IBadgeStore) => void;
+  remove: () => void;
 }
 
 export const useBadgeStore = create(
@@ -22,6 +23,8 @@ export const useBadgeStore = create(
       data: null,
 
       save: (badge: IBadgeStore) => set(() => ({ data: badge })),
+
+      remove: () => set(() => ({ data: null })),
     }),
     {
       name: 'nlw-pass-in:badge',
