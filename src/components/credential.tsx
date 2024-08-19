@@ -15,17 +15,11 @@ import { IBadgeStore } from '@/store/badge-store';
 
 interface IProps {
   data: IBadgeStore;
-  image?: string;
   onChangeAvatar?: () => void;
   onExpandQRCode?: () => void;
 }
 
-export function Credential({
-  image,
-  data,
-  onChangeAvatar,
-  onExpandQRCode,
-}: IProps) {
+export function Credential({ data, onChangeAvatar, onExpandQRCode }: IProps) {
   return (
     <View className="w-full self-stretch items-center">
       <Image
@@ -48,10 +42,10 @@ export function Credential({
           <View className="w-40 h-40 bg-black rounded-full" />
         </ImageBackground>
 
-        {image ? (
+        {data.image ? (
           <TouchableOpacity activeOpacity={0.9} onPress={onChangeAvatar}>
             <Image
-              source={{ uri: image }}
+              source={{ uri: data.image }}
               className="w-36 h-36 rounded-full -mt-24"
             />
           </TouchableOpacity>
