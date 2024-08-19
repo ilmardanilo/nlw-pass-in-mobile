@@ -11,13 +11,21 @@ import { colors } from '@/styles/colors';
 
 import { QRCode } from '@/components/qrcode';
 
+import { IBadgeStore } from '@/store/badge-store';
+
 interface IProps {
+  data: IBadgeStore;
   image?: string;
   onChangeAvatar?: () => void;
   onExpandQRCode?: () => void;
 }
 
-export function Credential({ image, onChangeAvatar, onExpandQRCode }: IProps) {
+export function Credential({
+  image,
+  data,
+  onChangeAvatar,
+  onExpandQRCode,
+}: IProps) {
   return (
     <View className="w-full self-stretch items-center">
       <Image
@@ -31,8 +39,10 @@ export function Credential({ image, onChangeAvatar, onExpandQRCode }: IProps) {
           className="px-6 py-8 h-40 items-center self-stretch border-b border-white/10 overflow-hidden"
         >
           <View className="w-full flex-row items-center justify-between">
-            <Text className="text-zinc-50 text-sm font-bold">Unite summit</Text>
-            <Text className="text-zinc-50 text-sm font-bold">#123</Text>
+            <Text className="text-zinc-50 text-sm font-bold">
+              {data.eventTitle}
+            </Text>
+            <Text className="text-zinc-50 text-sm font-bold">#{data.id}</Text>
           </View>
 
           <View className="w-40 h-40 bg-black rounded-full" />
@@ -56,14 +66,14 @@ export function Credential({ image, onChangeAvatar, onExpandQRCode }: IProps) {
         )}
 
         <Text className="text-zinc-50 text-2xl font-bold mt-4">
-          Ilmar Danilo
+          {data.name}
         </Text>
 
         <Text className="font-regular text-base text-zinc-300 mb-4">
-          ilmardanilo@hotmail.com
+          {data.email}
         </Text>
 
-        <QRCode size={120} value="test" />
+        <QRCode size={120} value={data.checkInURL} />
 
         <TouchableOpacity
           activeOpacity={0.7}
